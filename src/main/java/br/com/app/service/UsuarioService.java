@@ -21,8 +21,12 @@ public class UsuarioService extends BaseService {
 	}
 
 	public void salvar(UsuarioForm form) {
-		// TODO Auto-generated method stub
-		
+		Usuario usr = new Usuario()
+				.setEmail(form.getEmail())
+				.setNome(form.getNome())
+				.setSenha("123");
+		this.usuarioRepository.save(usr);
+				
 	}
 
 	public Usuario load(UsuarioLogado token) {

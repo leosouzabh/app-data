@@ -39,9 +39,11 @@
 		<!-- Dashboard Core -->
 		<script th:src="@{/js/require.min.js}"></script>
 		<script>
-	      requirejs.config({
-	          baseUrl: '.'
-	      });
+			var getUrl = window.location;
+			var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+			requirejs.config({
+				baseUrl: baseUrl
+			});
 	    </script>
 		<script th:src="@{/js/dashboard.js}"></script>
 		

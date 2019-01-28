@@ -14,6 +14,9 @@
 			
 			<div class="my-3 my-md-5">
 				<div class="container">
+					<div th:if="${mensagem}" class="alert" th:classappend="${mensagem.erro} ? alert-danger : (${mensagem.sucesso} ? alert-success : alert-primary)">
+						<span th:utext="${mensagem.mensagem}"></span>
+					</div>
 					
 					<div layout:fragment="content"></div>
 					

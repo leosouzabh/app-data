@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.app.model.MensagemView;
+
 public class BaseController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BaseController.class);
@@ -30,7 +32,7 @@ public class BaseController {
 	
 	
 	protected void sucessoRegistroSalvo(RedirectAttributes redir) {
-		redir.addFlashAttribute("mensagem", getMessage("msg.sucesso.registro.salvo"));
+		redir.addFlashAttribute("mensagem", MensagemView.buildSucesso(getMessage("msg.sucesso.registro.salvo")));
 	}
 
 
@@ -44,7 +46,16 @@ public class BaseController {
 
 
 	protected void erroMsg(Model model, String msg) {
-		model.addAttribute("erro", msg);
+		addMsg(model, MensagemView.buildErro(msg));
+	}
+	protected void infoMsg(Model model, String msg) {
+		addMsg(model, MensagemView.buildInfo(msg));
+	}
+	protected void sucessoMsg(Model model, String msg) {
+		addMsg(model, MensagemView.buildSucesso(msg));
 	}
 	
+	private void addMsg(Model model, MensagemView msgView) {
+		model.addAttribute("mensagem", msgView);
+	}
 }

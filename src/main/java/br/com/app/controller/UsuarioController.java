@@ -36,7 +36,8 @@ public class UsuarioController extends BaseController {
 	
 	
 	@GetMapping("/novo")
-	public String novo(UsuarioForm form, HttpServletRequest request) { 
+	public String novo(UsuarioForm form, Model model, HttpServletRequest request) { 
+		super.sucessoMsg(model, "leo");
 		return "usuario/novo";
 	}
 	
