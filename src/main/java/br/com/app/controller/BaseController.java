@@ -34,6 +34,10 @@ public class BaseController {
 	protected void sucessoRegistroSalvo(RedirectAttributes redir) {
 		redir.addFlashAttribute("mensagem", MensagemView.buildSucesso(getMessage("msg.sucesso.registro.salvo")));
 	}
+	
+	protected void sucessoRegistroExcluido(RedirectAttributes redir) {
+		redir.addFlashAttribute("mensagem", MensagemView.buildSucesso(getMessage("msg.sucesso.registro.excluido")));
+	}
 
 
 	private String getMessage(String key) {

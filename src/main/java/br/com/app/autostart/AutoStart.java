@@ -18,13 +18,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 
+import br.com.app.model.db.Usuario;
 import br.com.app.model.db.fruta.Cliente;
 import br.com.app.model.db.fruta.Empresa;
 import br.com.app.model.db.fruta.Endereco;
 import br.com.app.model.db.fruta.Pedido;
 import br.com.app.model.db.fruta.PedidoItem;
 import br.com.app.model.db.fruta.Produto;
-import br.com.app.model.db.fruta.Usuario;
 import br.com.app.repository.AusenciaRepository;
 import br.com.app.repository.ClienteRepository;
 import br.com.app.repository.EmpresaRepository;

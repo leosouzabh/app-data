@@ -1,4 +1,4 @@
-package br.com.app.model.db.fruta;
+package br.com.app.model.db;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

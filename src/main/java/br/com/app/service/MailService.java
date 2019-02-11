@@ -13,7 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import br.com.app.model.db.fruta.Usuario;
+import br.com.app.model.db.Usuario;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 

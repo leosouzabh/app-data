@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import br.com.app.model.db.fruta.Usuario;
+import br.com.app.model.db.Usuario;
 import br.com.app.model.form.UsuarioForm;
 import br.com.app.repository.UsuarioRepository;
 import br.com.app.security.auth.UsuarioLogado;
@@ -22,6 +22,7 @@ public class UsuarioService extends BaseService {
 
 	public void salvar(UsuarioForm form) {
 		Usuario usr = new Usuario()
+				.setId(form.getId())
 				.setEmail(form.getEmail())
 				.setNome(form.getNome())
 				.setSenha("123");
@@ -33,9 +34,17 @@ public class UsuarioService extends BaseService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Usuario get(Long id) {
+		return this.usuarioRepository.findOne(id);
+	}
 
 	public List<Usuario> list() {
 		return (List<Usuario>) usuarioRepository.findAll();
+	}
+
+	public void delete(Long id) {
+		usuarioRepository.delete(id);
 	}
 
 	

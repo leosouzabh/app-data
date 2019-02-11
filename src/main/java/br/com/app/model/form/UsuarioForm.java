@@ -23,16 +23,18 @@ public class UsuarioForm {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public UsuarioForm setId(Long id) {
 		this.id = id;
+		return this;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public UsuarioForm setNome(String nome) {
 		this.nome = nome;
+		return this;
 	}
 
 
@@ -40,8 +42,9 @@ public class UsuarioForm {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public UsuarioForm setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 	
 	

@@ -19,12 +19,12 @@ import br.com.app.service.MailService;
 import br.com.app.service.UsuarioService;
 
 @Controller
-@RequestMapping("/usuario")
-public class UsuarioController extends BaseController {
+@RequestMapping("/input")
+public class InputController extends BaseController {
 
 	private UsuarioService usuarioService;
 	
-	public UsuarioController(UsuarioService usuarioService, MailService mailService) {
+	public InputController(UsuarioService usuarioService, MailService mailService) {
 		this.usuarioService = usuarioService;
 	}
 
