@@ -1,0 +1,103 @@
+apply from: '_svn.gradle'
+apply from: '_repos.gradle'
+apply from: '_thirdparty-dependencies.gradle'
+apply from: '_publish.gradle'
+apply from: '_tattletale.gradle'
+apply from: '_owasp.gradle'
+apply from: '_dev.gradle'
+apply from: '_check-versions.gradle'
+
+apply plugin: 'nebula.dependency-recommender'
+
+buildscript {
+    String hostname = java.net.InetAddress.getLocalHost().getHostName()
+    Boolean isDeveloperHostname = (hostname.matches(/IED\d+/) || hostname.matches(/IEL\d+/) || hostname.matches(/IEVDI\d+/) || hostname.matches(/PLL\d+/))
+	Boolean bypassDeveloperMachineRestrictions = project.hasProperty('bypassDeveloperMachineRestrictions')
+
+	// Global Properties
+    ext {
+        isDeveloperMachine = (isDeveloperHostname && !bypassDeveloperMachineRestrictions)
+        isReleaseBuild = !(version.endsWith("-SNAPSHOT"))
+    }
+    repositories {
+        ivy {
+            url "http://nexus/content/groups/fineos-repositories-group"
+            credentials {
+                username prdReadOnlyUser
+                password prdReadOnlyPassword
+            }
+        }
+        maven {
+            url 'http://nexus/content/groups/thirdparty-public-repos/'
+        }
+    }
+
+    dependencies {
+		classpath 'fineos.gradle.plugins:database-creation:1.6.1'
+        classpath 'fineos.gradle.plugins:fineos-release:1.2'
+		classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
+		classpath 'fineos.gradle.plugins:fineos-aggregate-javadocs:1.0.2'
+		classpath 'com.netflix.nebula:nebula-dependency-recommender:5.1.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
+    }
+
+}
+
+def isDeveloperMachine() {
+    String hostname = java.net.InetAddress.getLocalHost().getHostName()
+    Boolean isDeveloperMachine = (hostname.matches(/IED\d+/) || hostname.matches(/IEL\d+/) || hostname.matches(/IEVDI\d+/) || hostname.matches(/PLL\d+/))
+	Boolean bypassDeveloperMachineRestrictions = project.hasProperty('bypassDeveloperMachineRestrictions')
+    return isDeveloperMachine && !bypassDeveloperMachineRestrictions
+}
+
+
+subprojects {
+    plugins.withType(JavaPlugin) {
+
+        // Add default manifest for all jars
+        tasks.withType(Jar) {
+            manifest {
+				attributes (
+					'Gradle-Version'         : "${gradle.gradleVersion}",
+					'Created-By'             : System.getProperty("java.version") + " (" + System.getProperty("java.specification.vendor") + " " + System.getProperty("java.vm.version") + ")",
+					'Subversion-Info'        : getSvnRemoteUrl() + "@" + getSvnRevision(),
+					'Jenkins-Job-Name'       : "$System.env.JOB_NAME",
+					'Jenkins-Build-Number'   : "$System.env.BUILD_NUMBER",
+					'Specification-Vendor'   : 'FINEOS Corporation',
+					'Specification-Version'  : version,
+					'Specification-Title'    : 'FINEOS TA-Java',
+					'Implementation-Vendor'  : 'FINEOS Corporation',
+					'Implementation-Title'   : manifestImplementationTitle,
+					'Implementation-Version' : version,
+					'Implementation-URL'     : 'https://documentation.fineos.com/support/documentation/technicalarchitecture/',
+					'Main-Class'             : 'com.fineos.ta.util.WhichVersion',
+					'SVN-Revision'           : getSvnRevision(),
+					'Implementation-Date'    : new java.util.Date().format("yyyy-MM-dd HH-mm-ss aa").toString()
+				)
+            }
+        }
+
+        // Configure default java compilation options
+        compileJava {
+            options.compilerArgs << "-Xmaxerrs" << "1000"
+            options.encoding = 'UTF-8'
+            options.incremental = true
+
+            sourceCompatibility = sourceCompatibility
+            targetCompatibility = targetCompatibility
+        }
+
+        // Configure default javadoc options
+        javadoc {
+            options.charSet = 'UTF-8'
+            options.encoding = 'UTF-8'
+            options.addStringOption('encoding', 'UTF-8')
+        }
+    }
+    plugins.withType(EclipsePlugin) {
+        tasks.eclipse.dependsOn cleanEclipse
+    }
+}
+
+//apply from: '_release.gradle'
+//apply from: '_javadoc.gradle'

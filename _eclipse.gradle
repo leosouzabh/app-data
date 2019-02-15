@@ -1,0 +1,30 @@
+/**
+ * Eclipse configuration for TA-Core project.
+ */
+apply plugin: 'eclipse'
+
+eclipse {
+    project {
+		// Add the AspectJ nature
+		natures 'org.eclipse.ajdt.ui.ajnature'
+
+		// Add the aspectJ builder...
+		// By default, the eclipse plugin wants to add the javabuilder build command to the generated
+		// Because the eclipse plugin doesn't give you access to remove buildCommands (append only), we remove all build commands
+		// and manually re-add the "org.eclipse.ajdt.core.ajbuilder" build command as this should be an AspectJ project
+		file {
+			withXml {
+				def node = it.asNode()
+
+				def buildSpec = node.get("buildSpec")
+				if (buildSpec) {
+					node.remove(buildSpec)
+				}
+				def buildCommand = node.appendNode("buildSpec").appendNode("buildCommand")
+				buildCommand.appendNode("name", "org.eclipse.ajdt.core.ajbuilder")
+				buildCommand.appendNode("arguments", "")
+			}
+		}
+    }
+}
+

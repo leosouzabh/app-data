@@ -1,0 +1,14 @@
+dependencies {
+	compileOnly 'fineos.sqlserver-unicode-jdbc-driver:sqlserver-unicode-jdbc-driver:1.1'
+    compileOnly deps.oracle_xdb6
+	compileOnly deps.oracle_ojdbc7
+	compileOnly 'ibm:db2jcc4:4.16.53'
+    compileOnly 'ibm.jms.websphere:com.ibm.ws.ejb.thinclient:7.0.0.3'
+    compileOnly 'ibm.jms.websphere:com.ibm.ws.sib.client.thin.jms:7.0.0.3'
+    compileOnly 'ibm.jms.websphere:com.ibm.ws.orb:7.0.0.3'
+    compileOnly 'ibm.jms.websphere:dhbcore:7.0.0.3'
+    compileOnly deps.aspectjrt
+    compileOnly 'org.apache.ant:ant:1.9.2'
+	compileOnly files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+
+}

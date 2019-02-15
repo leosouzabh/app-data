@@ -1,0 +1,4 @@
+/**
+ * Eclipse configuration for TA-Core project.
+ */
+apply plugin: 'eclipse'

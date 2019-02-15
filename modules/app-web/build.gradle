@@ -1,0 +1,21 @@
+apply plugin: 'java-library'
+apply from: '_eclipse.gradle'
+apply from: 'dependencies.gradle'
+
+
+sourceSets {
+	main {
+		java {
+			srcDirs = "src/main/java"
+		}
+		resources {
+			srcDirs ["src/main/resources", "src/main/webapps"]
+		}
+	}
+	test {
+		java {
+			srcDirs ["src/main/java", "src/test/resource"]
+		}
+	}
+}
+
